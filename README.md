@@ -441,3 +441,192 @@ Let’s refactor plantNeedsWater() to be a concise body. Notice that we’ve alr
 Output:
 
 ![Screenshot_188](https://user-images.githubusercontent.com/29931071/200922777-2bab1051-a69e-4fcb-80b7-b90228932850.png)
+
+
+
+
+# Scope
+
+An important idea in programming is scope. Scope defines where variables can be accessed or referenced. 
+
+While some variables can be accessed from anywhere within a program, other variables may only be available in a specific context.
+
+You can think of scope like the view of the night sky from your window. 
+
+Everyone who lives on the planet Earth is in the global scope of the stars. The stars are accessible globally. 
+
+Meanwhile, if you live in a city, you may see the city skyline or the river. The skyline and river are only accessible locally in your city, but you can still see the stars that are available globally.
+
+
+# Blocks and Scope
+
+Before we talk more about scope, we first need to talk about blocks.
+
+We’ve seen blocks used before in functions and if statements. A block is the code found inside a set of curly braces ```{}```. Blocks help us group one or more statements together and serve as an important structural marker for our code.
+
+A block of code could be a function, like this:
+
+```
+const logSkyColor = () => {
+  let color = 'blue'; 
+  console.log(color); // blue 
+}
+```
+
+Observe the block in an if statement:
+
+```
+if (dusk) {
+  let color = 'pink';
+  console.log(color); // pink
+}
+```
+
+
+# Global Scope
+
+In global scope, variables are declared outside of blocks. These variables are called global variables. Because global variables are not bound inside a block, they can be accessed by any code in the program, including code in blocks.
+
+Let’s take a look at an example of global scope:
+
+```
+const color = 'blue';
+ 
+const returnSkyColor = () => {
+  return color; // blue 
+};
+ 
+console.log(returnSkyColor()); // blue
+```
+
+- Even though the color variable is defined outside of the block, it can be accessed in the function block, giving it global scope.
+- In turn, color can be accessed within the returnSkyColor function block.
+
+
+## Class work
+
+1. At the top of app.js, write three global variables:
+
+Name the first variable satellite and set it equal to 'The Moon'.
+Name the second variable galaxy and set it equal to 'The Milky Way'.
+Name the third variable stars and set it equal to 'North Star'.
+
+2. Below the variables created in the previous step, write a function named callMyNightSky. Inside the function, include a return statement like this:
+
+```
+return 'Night Sky: ' + satellite + ', ' + stars + ', and ' + galaxy;
+```
+
+3. Beneath the callMyNightSky() function, use console.log() to log the value of callMyNightSky() to the console.
+
+You’ll notice that the function block for callMyNightSky() is able to access the global variables freely since the variables are available to all lines of code in the file.
+
+
+Output:
+
+![Screenshot_189](https://user-images.githubusercontent.com/29931071/201689344-c1708ba2-7e36-4474-a941-815873101578.png)
+
+
+
+
+# Block Scope
+
+The next context we’ll cover is block scope. When a variable is defined inside a block, it is only accessible to the code within the curly braces {}. We say that variable has block scope because it is only accessible to the lines of code within that block.
+
+Variables that are declared with block scope are known as local variables because they are only available to the code that is part of the same block.
+
+Block scope works like this:
+
+```
+const logSkyColor = () => {
+  let color = 'blue'; 
+  console.log(color); // blue 
+};
+ 
+logSkyColor(); // blue 
+console.log(color); // ReferenceError
+```
+
+
+You’ll notice:
+
+- We define a function logSkyColor().
+- Within the function, the color variable is only available within the curly braces of the function.
+- If we try to log the same variable outside the function, it throws a ReferenceError.
+
+
+## Class work
+
+1. In main.js, define a function logVisibleLightWaves().
+
+2. Within the logVisibleLightWaves() function, using const, create a variable lightWaves and set it equal to 'Moonlight'.
+
+3. Within the logVisibleLightWaves() function, beneath the lightWaves variable, add a console.log() statement that will log the value of the lightWaves variable when the function runs.
+
+4. Call the logVisibleLightWaves() function from outside the function.
+
+5. Beneath the function call, log the value of lightWaves to the console from outside the function.
+
+You’ll notice that it logs a ReferenceError since the variable is tied to the block scope of the function!
+
+
+Output:
+
+![Screenshot_190](https://user-images.githubusercontent.com/29931071/201690571-8205d6d1-5c1b-425e-ad94-3ba4fbea8331.png)
+
+
+# Scope pollution
+
+Scope pollution is when we have too many global variables that exist in the global namespace, or when we reuse variables across different scopes. 
+
+Scope pollution makes it difficult to keep track of our different variables and sets us up for potential accidents. 
+
+For example, globally scoped variables can collide with other variables that are more locally scoped, causing unexpected behavior in our code.
+
+```
+let num = 50;
+ 
+const logNum = () => {
+  num = 100; // Take note of this line of code
+  console.log(num);
+};
+ 
+logNum(); // Prints 100
+console.log(num); // Prints 100
+```
+
+
+## Class work
+
+```
+const satellite = 'The Moon';
+const galaxy = 'The Milky Way';
+let stars = 'North Star';
+
+const callMyNightSky = () => {
+  
+	return 'Night Sky: ' + satellite + ', ' + stars + ', ' + galaxy;
+};
+
+console.log(callMyNightSky());
+```
+
+1. Let’s see what happens if we create a variable that overwrites a global variable.
+
+Inside the callMyNightSky() function, on the very first line of the function body, assign the variable stars to 'Sirius' as such:
+
+```
+stars = 'Sirius';
+```
+
+2. Outside the function, under the current console.log() statement, add another console.log() statement to log stars to the console.
+
+You’ll notice that the global variable stars was reassigned to 'Sirius'. In other words, we changed the value of the global stars variable but it’s not easy to read what exactly happened. This is bad practice in code maintainability and could impact our program in ways we do not intend.
+
+
+Output:
+
+![Screenshot_191](https://user-images.githubusercontent.com/29931071/201691816-c7379287-712c-4cd0-b20a-4673b40a6f34.png)
+
+
+
